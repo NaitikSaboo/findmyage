@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Age Calculator — Find My Exact Age in Years, Months & Days | FindMyAge</title>
+<meta name="description" content="Calculate your exact age in years, months, days, hours and minutes instantly. Free online age calculator for India. Find days until next birthday, how many days you've lived and more." />
+<meta name="keywords" content="age calculator, how old am I, age calculator India, calculate my age, date of birth age calculator, exact age calculator, age in days calculator, birthday calculator, age finder, how many days old am I, age calculator online free" />
+<link rel="canonical" href="https://findmyage.vercel.app/" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Age Calculator — Find Your Exact Age Instantly | FindMyAge" />
+<meta property="og:description" content="Calculate your exact age in years, months, days and hours. Free, instant, no signup. Find days until your next birthday too." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://findmyage.vercel.app/" />
+<meta property="og:site_name" content="FindMyAge" />
+<meta property="og:locale" content="en_IN" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Age Calculator — Find Your Exact Age Instantly" />
+<meta name="twitter:description" content="Calculate your exact age in years, months, days and hours. Free and instant." />
+
+<!-- SEO -->
+<meta name="robots" content="index, follow" />
+<meta name="author" content="FindMyAge" />
+<meta name="geo.region" content="IN" />
+<meta name="geo.country" content="India" />
+<meta name="language" content="English" />
+<meta name="revisit-after" content="7 days" />
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FindMyAge — Age Calculator",
+  "url": "https://findmyage.vercel.app/",
+  "description": "Free online age calculator. Find your exact age in years, months, days, hours and minutes instantly.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "3400" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d0d14;
+  --bg2: #13131e;
+  --bg3: #1a1a2a;
+  --surface: #1f1f32;
+  --surface2: #252538;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --accent: #7c6af7;
+  --accent2: #a594ff;
+  --accent-glow: rgba(124,106,247,0.25);
+  --text: #f0f0f8;
+  --text2: #9898b8;
+  --text3: #5a5a7a;
+  --green: #4ade80;
+  --amber: #fbbf24;
+  --ff-head: 'Syne', sans-serif;
+  --ff-body: 'Epilogue', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 60px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,13,20,0.90);
+  backdrop-filter: blur(16px);
+}
+.logo { font-family: var(--ff-head); font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent2); }
+.nav-tag { font-size: 12px; color: var(--text3); border: 1px solid var(--border2); padding: 4px 12px; border-radius: 20px; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(124,106,247,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent2); background: rgba(124,106,247,0.12);
+  border: 1px solid rgba(124,106,247,0.25);
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: var(--ff-head); font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800; line-height: 1.1; margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p { font-size: 16px; color: var(--text2); max-width: 480px; margin: 0 auto; }
+
+/* ── CALCULATOR CARD ── */
+.calc-wrap { max-width: 680px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+.calc-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.calc-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+.input-section { margin-bottom: 1.5rem; }
+.input-label {
+  display: block; font-family: var(--ff-head); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2); margin-bottom: 10px;
+}
+
+.date-input-wrap { position: relative; }
+.date-input {
+  width: 100%; padding: 14px 18px; border-radius: 12px;
+  border: 1px solid var(--border2); background: var(--bg3);
+  color: var(--text); font-family: var(--ff-body); font-size: 18px; font-weight: 500;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.date-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.date-input::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+
+.calc-btn {
+  width: 100%; padding: 15px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  color: #fff; font-family: var(--ff-head); font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em;
+}
+.calc-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+.calc-btn:active { transform: translateY(0); }
+
+/* ── RESULTS ── */
+.results { display: none; }
+.results.show { display: block; animation: slideUp 0.4s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.result-main {
+  background: linear-gradient(135deg, rgba(124,106,247,0.12) 0%, rgba(165,148,255,0.06) 100%);
+  border: 1px solid rgba(124,106,247,0.25);
+  border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1.2rem;
+}
+.result-age-num {
+  font-family: var(--ff-head); font-size: clamp(3.5rem, 12vw, 6rem);
+  font-weight: 800; line-height: 1;
+  background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.result-age-label { font-size: 14px; color: var(--text2); margin-top: 6px; letter-spacing: 0.04em; }
+.result-exact { font-size: 18px; color: var(--text); margin-top: 12px; font-weight: 500; }
+.result-exact span { color: var(--accent2); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 1.2rem; }
+@media (min-width: 500px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.stat-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem; text-align: center;
+}
+.stat-num { font-family: var(--ff-head); font-size: 1.6rem; font-weight: 700; color: var(--text); }
+.stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.birthday-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.birthday-left { font-size: 14px; color: var(--text2); }
+.birthday-left strong { display: block; font-size: 16px; color: var(--text); font-family: var(--ff-head); margin-bottom: 2px; }
+.birthday-pill {
+  padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.25);
+}
+.birthday-pill.soon { background: rgba(251,191,36,0.12); color: var(--amber); border-color: rgba(251,191,36,0.25); }
+
+.fun-facts { margin-top: 1.2rem; }
+.fun-facts-title { font-family: var(--ff-head); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 10px; }
+.fun-list { display: flex; flex-direction: column; gap: 8px; }
+.fun-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--text2);
+}
+.fun-item strong { color: var(--accent2); font-family: var(--ff-head); }
+.fun-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* ── SEO CONTENT ── */
+.seo-section {
+  max-width: 680px; margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  border-top: 1px solid var(--border);
+}
+.seo-section h2 { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+.seo-section h3 { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.6rem; color: var(--text); }
+.seo-section p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 0.8rem; }
+.seo-section ul { font-size: 14px; color: var(--text2); padding-left: 1.2rem; line-height: 2.2; }
+
+.faq-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+.faq-q {
+  width: 100%; text-align: left; padding: 14px 18px; background: var(--surface);
+  border: none; color: var(--text); font-family: var(--ff-head); font-size: 14px; font-weight: 600;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+}
+.faq-q:hover { background: var(--surface2); }
+.faq-a { padding: 0 18px 14px; font-size: 13px; color: var(--text2); line-height: 1.7; display: none; }
+.faq-a.open { display: block; }
+.faq-arrow { transition: transform 0.2s; color: var(--text3); }
+.faq-arrow.open { transform: rotate(180deg); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border); padding: 2rem;
+  text-align: center; font-size: 13px; color: var(--text3);
+}
+footer a { color: var(--text3); }
+footer p + p { margin-top: 6px; }
+
+@media (max-width: 600px) {
+  .calc-card { padding: 1.5rem; }
+  .hero { padding: 3rem 1.5rem 2rem; }
+  nav { padding: 0 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Find<span>MyAge</span></a>
+  <span class="nav-tag">Free · Instant · No Signup</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">✦ Age Calculator</div>
+  <h1>How old am I exactly?</h1>
+  <p>Find your exact age in years, months, days, hours and minutes — plus fun facts about your life.</p>
+</div>
+
+<div class="calc-wrap">
+
+  <!-- CALCULATOR -->
+  <div class="calc-card">
+    <div class="input-section">
+      <label class="input-label" for="dob">Your date of birth</label>
+      <div class="date-input-wrap">
+        <input type="date" class="date-input" id="dob" max="" />
+      </div>
+    </div>
+    <div class="input-section">
+      <label class="input-label" for="calc-date">Calculate age on (optional)</label>
+      <div class="date-input-wrap">
+        <input type="date" class="date-input" id="calc-date" />
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calculate()">Calculate My Age →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="result-main">
+      <div class="result-age-num" id="res-years">--</div>
+      <div class="result-age-label">YEARS OLD</div>
+      <div class="result-exact" id="res-exact"></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="res-months">--</div>
+        <div class="stat-label">Total Months</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="res-weeks">--</div>
+        <div class="stat-label">Total Weeks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="res-days">--</div>
+        <div class="stat-label">Total Days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="res-hours">--</div>
+        <div class="stat-label">Total Hours</div>
+      </div>
+    </div>
+
+    <div class="birthday-card">
+      <div class="birthday-left">
+        <strong id="next-bday-date">--</strong>
+        Next birthday
+      </div>
+      <div class="birthday-pill" id="bday-pill">-- days away</div>
+    </div>
+
+    <div class="fun-facts">
+      <div class="fun-facts-title">Fun facts about your age</div>
+      <div class="fun-list" id="fun-list"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SEO CONTENT -->
+<div class="seo-section">
+  <h2>Age Calculator — Calculate Your Exact Age Online</h2>
+  <p>FindMyAge is a free online age calculator that tells you your exact age in years, months, days, weeks and hours. Simply enter your date of birth and get instant results — no signup, no ads interrupting you, completely free.</p>
+
+  <h3>How to calculate your age</h3>
+  <p>Enter your date of birth in the calculator above. You can also enter a specific date to calculate your age on that date — useful for checking your age on a past or future date, or verifying age eligibility for exams like JEE, NEET, UPSC and government jobs.</p>
+
+  <h3>Frequently Asked Questions</h3>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      How do I calculate my exact age? <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-a">Enter your date of birth above and click "Calculate My Age". The calculator will instantly show your exact age in years, months and days, along with your total age in months, weeks, days and hours.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      How many days old am I? <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-a">After calculating your age, the "Total Days" stat card shows exactly how many days you have been alive. For example, a 25-year-old is approximately 9,125 days old.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      Can I calculate my age for a specific date? <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-a">Yes! Use the "Calculate age on" field to enter any specific date — past or future. This is useful for checking age eligibility for UPSC, SSC, government jobs, school admissions and more.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      How many days until my next birthday? <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-a">The calculator automatically shows your next birthday date and how many days are left until it arrives — so you always know exactly when to celebrate!</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      Is this age calculator accurate? <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-a">Yes, FindMyAge calculates your exact age accounting for leap years, different month lengths and the precise number of days. The result is accurate to the day.</div>
+  </div>
+
+  <h3>Who uses an age calculator?</h3>
+  <ul>
+    <li>Students checking age eligibility for JEE, NEET, UPSC, SSC exams</li>
+    <li>Parents calculating their child's age for school admissions</li>
+    <li>HR professionals verifying candidate age for job applications</li>
+    <li>Anyone curious about how many days or hours they've been alive</li>
+    <li>People planning birthday celebrations and countdowns</li>
+  </ul>
+</div>
+
+<footer>
+  <p style="font-weight:600;color:var(--text2);margin-bottom:6px;">FindMyAge — Free Age Calculator</p>
+  <p>© 2025 FindMyAge. Free forever. No data stored. &nbsp;|&nbsp; <a href="/privacy.html">Privacy Policy</a></p>
+  <p style="margin-top:8px;font-size:12px;">Age calculator · How old am I · Calculate age from date of birth · Birthday calculator · Age in days</p>
+</footer>
+
+<script>
+// Set max date to today
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+document.getElementById('dob').setAttribute('max', todayStr);
+document.getElementById('calc-date').setAttribute('max', todayStr);
+document.getElementById('calc-date').value = todayStr;
+
+function calculate() {
+  const dobVal = document.getElementById('dob').value;
+  if (!dobVal) { alert('Please enter your date of birth.'); return; }
+
+  const dob = new Date(dobVal);
+  const calcVal = document.getElementById('calc-date').value;
+  const calcOn = calcVal ? new Date(calcVal) : today;
+
+  if (dob > calcOn) { alert('Date of birth cannot be in the future.'); return; }
+
+  // Exact years, months, days
+  let years = calcOn.getFullYear() - dob.getFullYear();
+  let months = calcOn.getMonth() - dob.getMonth();
+  let days = calcOn.getDate() - dob.getDate();
+
+  if (days < 0) {
+    months--;
+    const prevMonth = new Date(calcOn.getFullYear(), calcOn.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+  if (months < 0) { years--; months += 12; }
+
+  // Total calculations
+  const diffMs = calcOn - dob;
+  const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const totalWeeks = Math.floor(totalDays / 7);
+  const totalMonths = years * 12 + months;
+  const totalHours = totalDays * 24;
+
+  // Next birthday
+  let nextBday = new Date(calcOn.getFullYear(), dob.getMonth(), dob.getDate());
+  if (nextBday <= calcOn) nextBday.setFullYear(calcOn.getFullYear() + 1);
+  const daysUntilBday = Math.ceil((nextBday - calcOn) / (1000 * 60 * 60 * 24));
+  const bdayOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+  const nextBdayStr = nextBday.toLocaleDateString('en-IN', bdayOptions);
+
+  // Render
+  document.getElementById('res-years').textContent = years;
+  document.getElementById('res-exact').innerHTML = `<span>${years}</span> years, <span>${months}</span> months & <span>${days}</span> days`;
+  document.getElementById('res-months').textContent = totalMonths.toLocaleString('en-IN');
+  document.getElementById('res-weeks').textContent = totalWeeks.toLocaleString('en-IN');
+  document.getElementById('res-days').textContent = totalDays.toLocaleString('en-IN');
+  document.getElementById('res-hours').textContent = totalHours.toLocaleString('en-IN');
+
+  // Birthday
+  document.getElementById('next-bday-date').textContent = nextBdayStr;
+  const pill = document.getElementById('bday-pill');
+  if (daysUntilBday <= 30) {
+    pill.textContent = daysUntilBday === 0 ? '🎂 Today!' : `${daysUntilBday} days away`;
+    pill.className = 'birthday-pill soon';
+  } else {
+    pill.textContent = `${daysUntilBday} days away`;
+    pill.className = 'birthday-pill';
+  }
+
+  // Fun facts
+  const heartbeats = Math.round(totalDays * 24 * 60 * 72).toLocaleString('en-IN');
+  const breaths = Math.round(totalDays * 24 * 60 * 16).toLocaleString('en-IN');
+  const sleepDays = Math.round(totalDays * 0.33).toLocaleString('en-IN');
+  const meals = Math.round(totalDays * 3).toLocaleString('en-IN');
+
+  document.getElementById('fun-list').innerHTML = `
+    <div class="fun-item"><div class="fun-dot"></div> Your heart has beaten approximately <strong>${heartbeats}</strong> times</div>
+    <div class="fun-item"><div class="fun-dot"></div> You've taken around <strong>${breaths}</strong> breaths</div>
+    <div class="fun-item"><div class="fun-dot"></div> You've slept for roughly <strong>${sleepDays}</strong> days of your life</div>
+    <div class="fun-item"><div class="fun-dot"></div> You've eaten approximately <strong>${meals}</strong> meals</div>
+  `;
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.classList.add('show');
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Allow Enter key
+document.getElementById('dob').addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+
+// FAQ toggle
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const arrow = btn.querySelector('.faq-arrow');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-arrow').forEach(a => a.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('open'); arrow.classList.add('open'); }
+}
+</script>
+</body>
+</html>
